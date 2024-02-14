@@ -1,13 +1,15 @@
 import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
-import { Quiz } from "../quiz/quiz.model";
-import { Answer } from "../answer/answer.model";
-import { ObjectType } from "@nestjs/graphql";
+import { Quiz } from "../quiz/quiz.entity";
+import { Answer } from "../answer/answer.entity";
+import { Field, ObjectType } from "@nestjs/graphql";
 
 @ObjectType()
+@Entity()
 export class Question{
     @PrimaryGeneratedColumn()
     id: number;
 
+    @Field()
     @Column({type: 'text'})
     text!: string;
 

@@ -1,0 +1,26 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Question {
+  text: String!
+}
+
+type Quiz {
+  name: String!
+}
+
+type Query {
+  getQuestions(quizId: Int!): [Question!]!
+  getQuizzes: [Quiz!]!
+}
+
+type Mutation {
+  createQuiz(quizName: String!, questions: [QuestionInput!]!): Quiz!
+}
+
+input QuestionInput {
+  question: String!
+  text: String!
+  question_type: String!
+}

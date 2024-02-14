@@ -1,6 +1,6 @@
 import { Entity } from "typeorm";
 import { Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
-import { Question } from "../question/question.model";
+import { Question } from "../question/question.entity";
 
 
 @Entity()

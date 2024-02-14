@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Quiz } from "../quiz/quiz.model";
-import { SubmittedAnswer } from "../submitted_answer/submitted_answer.model";
+import { Quiz } from "../quiz/quiz.entity";
+import { SubmittedAnswer } from "../submitted_answer/submitted_answer.entity";
 
 
 @Entity()

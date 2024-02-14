@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Submission } from "../submission/submission.model";
-import { Question } from "../question/question.model";
+import { Submission } from "../submission/submission.entity";
+import { Question } from "../question/question.entity";
 
 
 @Entity()
