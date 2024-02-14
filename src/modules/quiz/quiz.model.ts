@@ -1,17 +1,20 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { Question } from './question.model';
-import { Entity, OneToMany } from 'typeorm';
+import { Question } from '../question/question.model';
+import { Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Submission } from '../submission/submission.model';
 
-@ObjectType()
 @Entity()
 export class Quiz {
-  @Field(() => Int)
-  id: number;
+  @PrimaryGeneratedColumn()
+  id!: number;
 
   @Field()
-  name: string;
+  name!: string;
 
-  @Field(() => [Question], { nullable: true })
-  @OneToMany(() => Question, (question) => question.quiz;
-  questions: Question[];
+  @OneToMany(() => Question, (question) => question.quiz)
+  questions!: Question[];
+
+  @OneToMany(() => Submission, (submission) => submission.quiz)
+  submissions!: Submission[];
+
 }
