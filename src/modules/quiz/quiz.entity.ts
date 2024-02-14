@@ -12,9 +12,11 @@ export class Quiz {
   @Field()
   name!: string;
 
+  @Field(() => [Question])
   @OneToMany(() => Question, (question) => question.quiz)
   questions!: Question[];
 
+  @Field(() => [Submission])
   @OneToMany(() => Submission, (submission) => submission.quiz)
   submissions!: Submission[];
 
