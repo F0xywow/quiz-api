@@ -1,8 +1,9 @@
 import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 import { Quiz } from "../quiz/quiz.model";
 import { Answer } from "../answer/answer.model";
+import { ObjectType } from "@nestjs/graphql";
 
-@Entity()
+@ObjectType()
 export class Question{
     @PrimaryGeneratedColumn()
     id: number;

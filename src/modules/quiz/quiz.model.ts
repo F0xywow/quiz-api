@@ -3,6 +3,7 @@ import { Question } from '../question/question.model';
 import { Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Submission } from '../submission/submission.model';
 
+@ObjectType()
 @Entity()
 export class Quiz {
   @PrimaryGeneratedColumn()

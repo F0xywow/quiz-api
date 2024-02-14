@@ -14,6 +14,6 @@ export class Answer {
     @Column()
     isCorrect!: boolean;
 
-    @ManyToOne(() => Question, (question) => question.answers)
+    @ManyToOne(() => Question, question => question.answers)
     question!: Question;
 }
