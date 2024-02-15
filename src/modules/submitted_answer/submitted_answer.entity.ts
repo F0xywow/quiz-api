@@ -1,8 +1,10 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Submission } from "../submission/submission.entity";
 import { Question } from "../question/question.entity";
+import { ObjectType, InputType } from "@nestjs/graphql";
 
-
+@ObjectType()
+@InputType('SubmittedAnswerInput')
 @Entity()
 export class SubmittedAnswer {
 

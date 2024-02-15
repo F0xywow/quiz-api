@@ -6,19 +6,16 @@ import { Answer } from 'src/modules/answer/answer.entity';
 export class CreateQuestionInput {
 
   @Field()
-  id: number;
-
-  @Field()
   text!: string;
 
-  @Field()
+  @Field(type => String, {nullable: true})
   questionType!: string;
 
-  @Field(type => Int)
-  quizId!: number;
+  @Field(type => Int, {nullable: true})
+  quizId: number;
 
-  @Field(type => Int)
-  answerId!: number;
+  @Field(type => Int, {nullable: true})
+  answerId?: number;
 
 }
 

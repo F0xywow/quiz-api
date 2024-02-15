@@ -2,11 +2,77 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Answer {
+  text: String!
+  isCorrect: Boolean!
+  question: Question!
+}
+
+type Question {
+  text: String!
+  quizId: Int
+  quiz: Quiz!
+  answerId: Int
+  answers: [Answer!]!
+}
+
+type Submission {
+  student_id: Int!
+}
+
 type Quiz {
+  id: Int!
   name: String!
+  questions: [Question!]
+  submissions: [Submission!]
+}
+
+input AnswerInput {
+  text: String!
+  isCorrect: Boolean!
+  question: QuestionInput!
+}
+
+input QuestionInput {
+  text: String!
+  quizId: Int
+  quiz: QuizInput!
+  answerId: Int
+  answers: [AnswerInput!]!
+}
+
+input SubmissionInput {
+  student_id: Int!
+}
+
+input QuizInput {
+  id: Int!
+  name: String!
+  questions: [QuestionInput!]
+  submissions: [SubmissionInput!]
 }
 
 type Query {
-  getQuizes: [Quiz!]!
-  getQuestionsByQuizId: Quiz!
+  findAllQuizzes: [Quiz!]!
+  findOneQuiz(id: Int!): Quiz!
+  getQuestion(id: Float!): Question!
+  getQuestions: [Question!]!
+}
+
+type Mutation {
+  createQuiz(createQuizInput: createQuizInput!): Quiz!
+  createQuestion(createQuestionInput: CreateQuestionInput!): Question!
+}
+
+input createQuizInput {
+  name: String!
+  questions: [QuestionInput!]!
+  submissions: [SubmissionInput!]!
+}
+
+input CreateQuestionInput {
+  text: String!
+  questionType: String
+  quizId: Int
+  answerId: Int
 }

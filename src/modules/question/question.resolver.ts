@@ -4,10 +4,11 @@ import { Question } from "./question.entity";
 import { CreateQuestionInput } from "./dto/create_question.input";
 import { ResolveField, Parent } from "@nestjs/graphql";
 import { Quiz } from "../quiz/quiz.entity";
+import { Inject } from "@nestjs/common";
 
 @Resolver(() => Question)
 export class QuestionResolver {
-    constructor(private questionService: QuestionService){}
+    constructor(@Inject(QuestionService) private questionService: QuestionService){}
 
     @Query(() => Question, {name: 'getQuestion'})
     findOneQuestion(@Args('id') id: number): Promise<Question> {
@@ -24,7 +25,7 @@ export class QuestionResolver {
         return this.questionService.getQuiz(question.quizId);
     }
 
-    @Mutation((returns) => Question)
+    @Mutation(() => Question)
     createQuestion(
         @Args('createQuestionInput') createQuestionInput: CreateQuestionInput
         ): Promise<Question> {
