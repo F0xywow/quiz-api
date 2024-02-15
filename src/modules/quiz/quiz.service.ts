@@ -8,12 +8,17 @@ import { createQuizInput } from "./dto/create_quiz.input";
 export class QuizService {
     constructor(@InjectRepository(Quiz) private quizRepository: Repository<Quiz>){}
 
-    async find(): Promise<Quiz[]> {
+    create(createQuizInput: createQuizInput): Promise<Quiz> {
+        const quiz = this.quizRepository.create(createQuizInput);
+        return this.quizRepository.save(quiz);
+    }
+
+    findAll(): Promise<Quiz[]> {
         return this.quizRepository.find();
     }
 
-    async findWhere(options: any): Promise<Quiz> {
-        return this.quizRepository.findOne(options);
+    findOne(id: number): Promise<Quiz> {
+        return this.quizRepository.findOne({where: {id: id}});
     }
     
 

@@ -1,18 +1,26 @@
 import { Resolver, Mutation, Args, Int, Query } from '@nestjs/graphql';
 import { Quiz } from "./quiz.entity";
 import { QuizService } from './quiz.service';
+import { createQuizInput } from './dto/create_quiz.input';
+import { text } from 'stream/consumers';
 
 @Resolver(() => Quiz)
 export class QuizResolver {
     constructor(private quizService: QuizService){}
 
-    @Query(() => [Quiz])
-    async getQuizes(): Promise<Quiz[]>{
-        return this.quizService.find();
+    @Mutation(() => Quiz)
+    createQuiz(@Args('createQuizInput') createQuizInput: createQuizInput): Promise<Quiz> {
+        return this.quizService.create(createQuizInput);
     }
 
-    @Query(() => Quiz)
-    async getQuestionsByQuizId(quizId: number): Promise<Quiz>{
-        return this.quizService.findWhere({ where: { id: quizId }, relations: ["questions"] });
+    @Query(() => [Quiz], {name: 'getQuizzes'})
+    findAllQuizzes(): Promise<Quiz[]> {
+        return this.quizService.findAll();
     }
+
+    @Query(() => Quiz, {name: 'getQuiz'})
+    findOneQuiz(@Args('id', {type: () => Int}) id: number): Promise<Quiz> {
+        return this.quizService.findOne(id);
+    }
+
 }

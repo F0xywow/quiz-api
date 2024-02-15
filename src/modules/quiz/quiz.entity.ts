@@ -11,13 +11,13 @@ export class Quiz {
 
   @Field()
   name!: string;
-
-  @Field(() => [Question])
+  
   @OneToMany(() => Question, (question) => question.quiz)
-  questions!: Question[];
+  @Field(() => [Question])
+  questions: Question[];
 
-  @Field(() => [Submission])
   @OneToMany(() => Submission, (submission) => submission.quiz)
-  submissions!: Submission[];
+  @Field(() => [Submission])
+  submissions: Submission[];
 
 }
