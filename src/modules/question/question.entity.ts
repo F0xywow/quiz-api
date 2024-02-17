@@ -28,5 +28,4 @@ export class Question{
     @OneToMany(() => Answer, answer => answer.question, {nullable: true})
     @Field(() => [Answer])
     answers?: Answer[];
-    
 }

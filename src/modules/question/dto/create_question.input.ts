@@ -12,6 +12,5 @@ export class CreateQuestionInput {
 
   @Field(type => [CreateAnswerInput], {nullable: true})
   answers: CreateAnswerInput[];
-
 }
 
