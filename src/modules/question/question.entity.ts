@@ -18,7 +18,7 @@ export class Question{
     questionType!: string;
 
     @Column()
-    @Field(type => Int, {nullable: true})
+    @Field(type => Int)
     quizId?: number;
 
     @ManyToOne(() => Quiz, quiz => quiz.questions, {nullable: true})

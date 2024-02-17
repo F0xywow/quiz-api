@@ -10,8 +10,8 @@ export class CreateQuestionInput {
   @Field(type => String, {nullable: true})
   questionType!: string;
 
-  @Field(type => [CreateAnswerInput])
-  answers!: CreateAnswerInput[];
+  @Field(type => [CreateAnswerInput], {nullable: true})
+  answers: CreateAnswerInput[];
 
 }
 

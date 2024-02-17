@@ -11,7 +11,7 @@ type Answer {
 
 type Question {
   text: String!
-  quizId: Int
+  quizId: Int!
   quiz: Quiz!
   answers: [Answer!]!
 }
@@ -31,7 +31,7 @@ input AnswerInput {
 
 input QuestionInput {
   text: String!
-  quizId: Int
+  quizId: Int!
   quiz: QuizInput!
   answers: [AnswerInput!]!
 }
@@ -65,7 +65,7 @@ input CreateQuizInput {
 input CreateQuestionInput {
   text: String!
   questionType: String
-  answers: [CreateAnswerInput!]!
+  answers: [CreateAnswerInput!]
 }
 
 input CreateAnswerInput {
