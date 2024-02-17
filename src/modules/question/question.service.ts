@@ -25,7 +25,7 @@ export class QuestionService {
     }
 
     getQuiz(quiz_id: number): Promise<Quiz> {
-        return this.QuizService.findOne(quiz_id);
+        return this.QuizService.findOneQuiz(quiz_id);
     }
 
 }

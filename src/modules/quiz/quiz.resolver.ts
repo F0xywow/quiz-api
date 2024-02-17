@@ -20,7 +20,7 @@ export class QuizResolver {
 
     @Query(() => Quiz)
     findOneQuiz(@Args('id', {type: () => Int}) id: number): Promise<Quiz> {
-        return this.quizService.findOne(id);
+        return this.quizService.findOneQuiz(id);
     }
 
 }

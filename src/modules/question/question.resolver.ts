@@ -10,17 +10,17 @@ import { Inject } from "@nestjs/common";
 export class QuestionResolver {
     constructor(@Inject(QuestionService) private questionService: QuestionService){}
 
-    @Query(() => Question, {name: 'getQuestion'})
+    @Query(() => Question)
     findOneQuestion(@Args('id') id: number): Promise<Question> {
         return this.questionService.findOneQuestion(id);
     }
 
-    @Query(() => [Question], {name: 'getQuestions'})
+    @Query(() => [Question])
     findAllQuestions(): Promise<Question[]> {
         return this.questionService.findAllQuestions();
     }
 
-    @ResolveField(returns => Quiz, {name: 'quiz'})
+    @ResolveField(returns => Quiz)
     quiz(@Parent() question : Question): Promise<Quiz>{
         return this.questionService.getQuiz(question.quizId);
     }

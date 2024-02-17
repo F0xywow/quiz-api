@@ -18,7 +18,7 @@ export class QuizService {
         return this.quizRepository.find();
     }
 
-    findOne(id: number){
+    findOneQuiz(id: number){
         return this.quizRepository.findOne({where: {id: id}});
     }
     

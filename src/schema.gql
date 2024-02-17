@@ -5,6 +5,7 @@
 type Answer {
   text: String!
   isCorrect: Boolean!
+  questionId: Int!
   question: Question!
 }
 
@@ -30,6 +31,7 @@ type Quiz {
 input AnswerInput {
   text: String!
   isCorrect: Boolean!
+  questionId: Int!
   question: QuestionInput!
 }
 
@@ -55,13 +57,16 @@ input QuizInput {
 type Query {
   findAllQuizzes: [Quiz!]!
   findOneQuiz(id: Int!): Quiz!
-  getQuestion(id: Float!): Question!
-  getQuestions: [Question!]!
+  findOneQuestion(id: Float!): Question!
+  findAllQuestions: [Question!]!
+  findOneAnswer(id: Float!): Answer!
+  findAllAnswers: [Answer!]!
 }
 
 type Mutation {
   createQuiz(createQuizInput: createQuizInput!): Quiz!
   createQuestion(createQuestionInput: CreateQuestionInput!): Question!
+  createAnswer(CreateAnswerInput: CreateAnswerInput!): Answer!
 }
 
 input createQuizInput {
@@ -75,4 +80,10 @@ input CreateQuestionInput {
   questionType: String
   quizId: Int
   answerId: Int
+}
+
+input CreateAnswerInput {
+  text: String!
+  isCorrect: Boolean!
+  questionId: Int!
 }
