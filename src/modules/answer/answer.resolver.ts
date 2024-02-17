@@ -8,7 +8,7 @@ import { CreateAnswerInput } from "./dto/create_answer.input";
 
 @Resolver(() => Answer)
 export class AnswerResolver{
-    constructor(@Inject(AnswerService) private answerService: AnswerService) {}
+    constructor(private answerService: AnswerService) {}
 
     @Query(() => Answer)
     findOneAnswer(
@@ -22,16 +22,16 @@ export class AnswerResolver{
         return this.answerService.findAllAnswers();
     }
 
-    @ResolveField(returns => Question)
+   /* @ResolveField(returns => Question)
     question(@Parent() answer: Answer): Promise<Question>{
         return this.answerService.getQuestion(answer.questionId);
-    }
+    } */
 
     @Mutation(() => Answer)
     createAnswer(
         @Args('CreateAnswerInput') createAnswerInput: CreateAnswerInput
         ): Promise<Answer>{
-            return this.answerService.createAnswer(createAnswerInput);
+            return this.answerService.create(createAnswerInput);
         }
 
 }

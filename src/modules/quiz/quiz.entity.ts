@@ -18,7 +18,4 @@ export class Quiz {
   @OneToMany(() => Question, (question) => question.quiz, {nullable: true})
   @Field(type => [Question])
   questions?: Question[];
-
-
-
 }

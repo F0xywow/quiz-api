@@ -1,13 +1,12 @@
 import { Field, InputType } from "@nestjs/graphql";
-import { Question } from "src/modules/question/question.entity";
-import { Submission } from "src/modules/submission/submission.entity";
+import { CreateQuestionInput } from "../../question/dto/create_question.input";
 
 @InputType()
-export class createQuizInput {
+export class CreateQuizInput {
 
     @Field(type => String)
     name: string;
 
-    @Field(type => [Question])
-    questions: Question[];
+    @Field(type => [CreateQuestionInput])
+    questions: CreateQuestionInput[];
 }

@@ -13,7 +13,6 @@ type Question {
   text: String!
   quizId: Int
   quiz: Quiz!
-  answerId: Int
   answers: [Answer!]!
 }
 
@@ -34,7 +33,6 @@ input QuestionInput {
   text: String!
   quizId: Int
   quiz: QuizInput!
-  answerId: Int
   answers: [AnswerInput!]!
 }
 
@@ -54,20 +52,20 @@ type Query {
 }
 
 type Mutation {
-  createQuiz(createQuizInput: createQuizInput!): Quiz!
-  createQuestion(createQuestionInput: CreateQuestionInput!): Question!
+  createQuiz(createQuizInput: CreateQuizInput!): Quiz!
+  createQuestion(createQuestionInput: CreateQuestionInput!, quizId: Int!): Question!
   createAnswer(CreateAnswerInput: CreateAnswerInput!): Answer!
 }
 
-input createQuizInput {
+input CreateQuizInput {
   name: String!
-  questions: [QuestionInput!]!
+  questions: [CreateQuestionInput!]!
 }
 
 input CreateQuestionInput {
   text: String!
   questionType: String
-  answers: [AnswerInput!]!
+  answers: [CreateAnswerInput!]!
 }
 
 input CreateAnswerInput {

@@ -8,9 +8,11 @@ import { QuestionService } from "../question/question.service";
 
 @Injectable()
 export class AnswerService {
-    constructor(@InjectRepository(Answer) private answerRepository: Repository<Answer>, private QuestionService:QuestionService){}
+    constructor(@InjectRepository(Answer) 
+    private answerRepository: Repository<Answer>, 
+    ){}
 
-    createAnswer(createAnswerInput: CreateAnswerInput): Promise<Answer> {
+    create(createAnswerInput: CreateAnswerInput): Promise<Answer> {
         const answer = this.answerRepository.create(createAnswerInput);
 
         return this.answerRepository.save(answer);
@@ -24,7 +26,7 @@ export class AnswerService {
         return this.answerRepository.findOne({where: {id: id}});
     }
 
-    getQuestion(question_id: number): Promise<Question> {
+  /*  getQuestion(question_id: number): Promise<Question> {
         return this.QuestionService.findOneQuestion(question_id);
-    }
+    } */
 }
