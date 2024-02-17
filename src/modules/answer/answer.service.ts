@@ -26,7 +26,4 @@ export class AnswerService {
         return this.answerRepository.findOne({where: {id: id}});
     }
 
-  /*  getQuestion(question_id: number): Promise<Question> {
-        return this.QuestionService.findOneQuestion(question_id);
-    } */
 }

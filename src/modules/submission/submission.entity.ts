@@ -17,4 +17,19 @@ export class Submission {
     @Column({type:'timestamp', default: () => 'CURRENT_TIMESTAMP'})
     submitted_at!: Date;
 
+    @Field(type => Int)
+    @Column()
+    quiz_id!: number;
+
+    @Field(type => Int)
+    quizId!: number;  
+
+    @Field(type => [Int])
+    @Column()
+    question_id!: number[];
+
+    @Field(type => [Int])
+    @Column()
+    answer_id!: number[];
+
 }

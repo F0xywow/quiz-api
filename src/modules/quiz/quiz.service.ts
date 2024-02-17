@@ -32,5 +32,9 @@ export class QuizService {
     findOneQuiz(id: number){
         return this.quizRepository.findOne({where: {id: id}});
     }
+
+    getQuestions(quiz_id: number){
+        return this.questionService.findAllQuestionsByQuiz(quiz_id);
+    }
     
 }

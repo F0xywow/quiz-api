@@ -58,8 +58,7 @@ export class QuestionService {
         return this.questionRepository.findOne({where: {id: id}});
     }
 
-   /* getQuiz(quiz_id: number): Promise<Quiz> {
-        return this.quizService.findOneQuiz(quiz_id);
+    findAllQuestionsByQuiz(quiz_id: number): Promise<Question[]> {
+        return this.questionRepository.find({where: {quizId: quiz_id}});
     }
-*/
 }
