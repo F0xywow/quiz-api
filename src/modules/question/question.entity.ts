@@ -8,10 +8,11 @@ import { Field, ObjectType, Int, InputType } from "@nestjs/graphql";
 @InputType('QuestionInput')
 export class Question{
     @PrimaryGeneratedColumn()
-    id: number;
+    id?: number;
 
-    @Field()
+    
     @Column({type: 'text'})
+    @Field()
     text!: string;
 
     @Column()
@@ -19,18 +20,18 @@ export class Question{
 
     @Column()
     @Field(type => Int, {nullable: true})
-    quizId!: number;
+    quizId?: number;
 
     @ManyToOne(() => Quiz, quiz => quiz.questions)
     @Field(() => Quiz)
-    quiz: Quiz;
+    quiz?: Quiz;
 
     @Column()
     @Field(type => Int, {nullable: true})
-    answerId!: number;
+    answerId?: number;
 
-    @OneToMany(() => Answer, answer => answer.question)
+    @OneToMany(() => Answer, answer => answer.question, {nullable: true})
     @Field(() => [Answer])
-    answers: Answer[];
+    answers?: Answer[];
     
 }

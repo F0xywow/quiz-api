@@ -10,7 +10,7 @@ export class QuizResolver {
 
     @Mutation(() => Quiz)
     createQuiz(@Args('createQuizInput') createQuizInput: createQuizInput): Promise<Quiz> {
-        return this.quizService.create(createQuizInput);
+        return this.quizService.createQuiz(createQuizInput);
     }
 
     @Query(() => [Quiz])

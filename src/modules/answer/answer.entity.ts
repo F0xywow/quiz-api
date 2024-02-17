@@ -8,7 +8,7 @@ import { Field, InputType, Int, ObjectType } from "@nestjs/graphql";
 @InputType('AnswerInput')
 export class Answer {
     @PrimaryGeneratedColumn()
-    id!: number;
+    id?: number;
 
     @Column({type: 'text'})
     @Field()
@@ -19,9 +19,9 @@ export class Answer {
     isCorrect!: boolean;
 
     @Field(type => Int)
-    questionId: number
+    questionId?: number
 
     @ManyToOne(() => Question, question => question.answers)
     @Field(type => Question)
-    question!: Question;
+    question?: Question;
 }

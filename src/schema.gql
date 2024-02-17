@@ -17,15 +17,10 @@ type Question {
   answers: [Answer!]!
 }
 
-type Submission {
-  student_id: Int!
-}
-
 type Quiz {
   id: Int!
   name: String!
-  questions: [Question!]
-  submissions: [Submission!]
+  questions: [Question!]!
 }
 
 input AnswerInput {
@@ -43,15 +38,10 @@ input QuestionInput {
   answers: [AnswerInput!]!
 }
 
-input SubmissionInput {
-  student_id: Int!
-}
-
 input QuizInput {
   id: Int!
   name: String!
-  questions: [QuestionInput!]
-  submissions: [SubmissionInput!]
+  questions: [QuestionInput!]!
 }
 
 type Query {
@@ -72,18 +62,15 @@ type Mutation {
 input createQuizInput {
   name: String!
   questions: [QuestionInput!]!
-  submissions: [SubmissionInput!]!
 }
 
 input CreateQuestionInput {
   text: String!
   questionType: String
-  quizId: Int
-  answerId: Int
+  answers: [AnswerInput!]!
 }
 
 input CreateAnswerInput {
   text: String!
   isCorrect: Boolean!
-  questionId: Int!
 }

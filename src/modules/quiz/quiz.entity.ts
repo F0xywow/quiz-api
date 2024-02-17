@@ -15,12 +15,10 @@ export class Quiz {
   @Field()
   name!: string;
   
-  @OneToMany(() => Question, (question) => question.quiz)
-  @Field(type => [Question], {nullable: true})
+  @OneToMany(() => Question, (question) => question.quiz, {nullable: true})
+  @Field(type => [Question])
   questions?: Question[];
 
-  @OneToMany(() => Submission, (submission) => submission.quiz)
-  @Field(type => [Submission], {nullable: true})
-  submissions?: Submission[];
+
 
 }
