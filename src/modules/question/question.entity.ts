@@ -2,7 +2,8 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColum
 import { Quiz } from "../quiz/quiz.entity";
 import { Answer } from "../answer/answer.entity";
 import { Field, ObjectType, Int, InputType } from "@nestjs/graphql";
-import { QuestionType } from "./questionType.entity";
+import { text } from "stream/consumers";
+import { stringify } from "querystring";
 
 @ObjectType()
 @Entity()
@@ -15,14 +16,9 @@ export class Question{
     @Field()
     text!: string;
 
-    @ManyToOne(() => QuestionType)
-    @JoinColumn({name: 'questionTypeId'})
-    @Field(() => QuestionType)
-    questionType!: QuestionType;
-
-    @Column()
-    @Field(type => Int)
-    questionTypeId!: number;
+    @Column({type: 'text'})
+    @Field({nullable: true})
+    questionType: string;
 
     @Column()
     @Field(type => Int)
@@ -36,10 +32,9 @@ export class Question{
     @Field(() => [Answer])
     answers?: Answer[];
 
-    @ManyToMany(() => Answer, {nullable: true})
-    @JoinTable({name: "question_correct_answers"})
-    @Field(() => [Answer], {nullable: true})
-    correctAnswers?: Answer[];
+    @Column(() => text)
+    @Field(() => [String], {nullable: true})
+    correctAnswers?: string[];
 
     @Column({type: 'text', nullable: true})
     @Field({nullable: true})

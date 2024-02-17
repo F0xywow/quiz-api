@@ -11,15 +11,33 @@ type Answer {
 
 type Question {
   text: String!
+  questionType: String
   quizId: Int!
   quiz: Quiz!
   answers: [Answer!]!
+  correctAnswers: [String!]
+  plainTextAnswer: String
+  correctOrder: [Int!]
+}
+
+type Submission {
+  student_id: Int!
+  quiz_id: Int!
+  question_ids: [Int!]!
+  answer_ids: [Int!]!
+  userAnswers: [String!]
 }
 
 type Quiz {
   id: Int!
   name: String!
   questions: [Question!]!
+  submissions: [Submission!]!
+}
+
+type ResultType {
+  totalPoints: Int!
+  obtainedPoints: Int!
 }
 
 input AnswerInput {
@@ -31,15 +49,28 @@ input AnswerInput {
 
 input QuestionInput {
   text: String!
+  questionType: String
   quizId: Int!
   quiz: QuizInput!
   answers: [AnswerInput!]!
+  correctAnswers: [String!]
+  plainTextAnswer: String
+  correctOrder: [Int!]
+}
+
+input SubmissionInput {
+  student_id: Int!
+  quiz_id: Int!
+  question_ids: [Int!]!
+  answer_ids: [Int!]!
+  userAnswers: [String!]
 }
 
 input QuizInput {
   id: Int!
   name: String!
   questions: [QuestionInput!]!
+  submissions: [SubmissionInput!]!
 }
 
 type Query {
@@ -49,12 +80,16 @@ type Query {
   findAllQuestions: [Question!]!
   findOneAnswer(id: Float!): Answer!
   findAllAnswers: [Answer!]!
+  findOneSubmission(id: Float!): Submission!
+  findAllSubmissions: [Submission!]!
+  calculateResult(submissionId: Int!): ResultType!
 }
 
 type Mutation {
   createQuiz(createQuizInput: CreateQuizInput!): Quiz!
   createQuestion(createQuestionInput: CreateQuestionInput!, quizId: Int!): Question!
   createAnswer(CreateAnswerInput: CreateAnswerInput!): Answer!
+  createSubmission(createSubmissionInput: CreateSubmissionInput!): Submission!
 }
 
 input CreateQuizInput {
@@ -66,9 +101,19 @@ input CreateQuestionInput {
   text: String!
   questionType: String
   answers: [CreateAnswerInput!]
+  correctAnswers: [String!]
+  plainTextAnswer: String
+  correctOrder: [Int!]
 }
 
 input CreateAnswerInput {
   text: String!
   isCorrect: Boolean!
+}
+
+input CreateSubmissionInput {
+  student_id: Int!
+  quiz_id: Int!
+  question_number: [Int!]!
+  answer_number: [Int!]!
 }

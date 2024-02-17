@@ -5,6 +5,8 @@ import { Repository } from "typeorm";
 import { CreateQuestionInput } from "./dto/create_question.input";
 import { AnswerService } from "../answer/answer.service";
 
+type QusetionType = 'singleAnswer' | 'multipleAnswers' | 'sorting' | 'plainTextAnswer';
+
 @Injectable()
 export class QuestionService {
     constructor(@InjectRepository(Question) 
@@ -12,43 +14,20 @@ export class QuestionService {
     private answerService: AnswerService,
     ){}
 
-    async createQuestion(createQuestionInput: CreateQuestionInput, quizId: number) {
-        let question;
-    
-        switch (createQuestionInput.questionType) {
-          case 'singleCorrectAnswer':
-            question = await this.questionRepository.create(
-              createQuestionInput
-            );
-            break;
-          case 'multipleCorrectAnswers':
-            question = await this.questionRepository.create(
-                createQuestionInput
-              );
-            break;
-          case 'sorting':
-            question = await this.questionRepository.create(
-                createQuestionInput
-              );
-            break;
-          case 'plainTextAnswer':
-            question = await this.questionRepository.create(
-                createQuestionInput
-              );
-            break;
-          default:
+    async createQuestion(createQuestionInput: CreateQuestionInput, quizId: number){
+        if (!['singleAnswer', 'multipleAnswers', 'sorting', 'plainTextAnswer'].includes(createQuestionInput.questionType)) {
             throw new Error('Invalid question type');
-        }
-    
+          }
+        const question = this.questionRepository.create(createQuestionInput);
         question.quizId = quizId;
-    
+        
         for (const answerInput of createQuestionInput.answers) {
-          const answer = await this.answerService.create(answerInput);
-          question.answers.push(answer);
+            const answer = await this.answerService.create(answerInput);
+            question.answers.push(answer);
         }
-    
+        
         return this.questionRepository.save(question);
-      }
+    }
 
     findAllQuestions(): Promise<Question[]> {
         return this.questionRepository.find();
@@ -61,4 +40,5 @@ export class QuestionService {
     findAllQuestionsByQuiz(quiz_id: number): Promise<Question[]> {
         return this.questionRepository.find({where: {quizId: quiz_id}});
     }
+   
 }

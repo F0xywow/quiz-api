@@ -12,5 +12,13 @@ export class CreateQuestionInput {
 
   @Field(type => [CreateAnswerInput], {nullable: true})
   answers: CreateAnswerInput[];
-}
 
+  @Field(type => [String], {nullable: true})
+  correctAnswers?: string[];
+
+  @Field(type => String, {nullable: true})
+  plainTextAnswer?: string;
+
+  @Field(type => [Int], {nullable: true})
+  correctOrder?: number[];
+}

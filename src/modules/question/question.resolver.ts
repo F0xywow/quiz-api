@@ -2,8 +2,6 @@ import { Args, Resolver, Query, Mutation, Int } from "@nestjs/graphql";
 import { QuestionService } from "./question.service";
 import { Question } from "./question.entity";
 import { CreateQuestionInput } from "./dto/create_question.input";
-import { ResolveField, Parent } from "@nestjs/graphql";
-import { Quiz } from "../quiz/quiz.entity";
 
 @Resolver(() => Question)
 export class QuestionResolver {
@@ -19,11 +17,6 @@ export class QuestionResolver {
         return this.questionService.findAllQuestions();
     }
 
-   /* @ResolveField(returns => Quiz)
-    quiz(@Parent() question : Question): Promise<Quiz>{
-        return this.questionService.getQuiz(question.quizId);
-    }
-*/
     @Mutation(() => Question)
     createQuestion(
         @Args('createQuestionInput') createQuestionInput: CreateQuestionInput,

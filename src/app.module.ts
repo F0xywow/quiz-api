@@ -9,6 +9,7 @@ import { AppService } from './app.service';
 import { QuizModule } from './modules/quiz/quiz.module';
 import { QuestionModule } from './modules/question/question.module';
 import { AnswerModule } from './modules/answer/answer.module';
+import { SubmissionModule } from './modules/submission/submission.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { AnswerModule } from './modules/answer/answer.module';
     QuizModule,
     QuestionModule,
     AnswerModule,
+    SubmissionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

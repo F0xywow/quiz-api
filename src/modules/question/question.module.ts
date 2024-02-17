@@ -9,7 +9,7 @@ import { forwardRef } from "@nestjs/common";
 
 @Module({
     imports: [TypeOrmModule.forFeature([
-        Question,
+        Question
     ]),forwardRef(() => QuizModule),AnswerModule],
     providers: [
         QuestionResolver,
