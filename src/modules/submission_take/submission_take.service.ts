@@ -22,7 +22,7 @@ export class SubmissionTakeService {
         const correctAnswers = await this.answerService.findAllAnswersByQuestion(question.id);
 
         submissionTake.isCorrect = createSubmissionTakeInput.textAnswers.every(answer =>
-            correctAnswers.some(correctAnswer => correctAnswer.text === answer)
+            correctAnswers.some(correctAnswer => correctAnswer.text.toLowerCase() === answer.toLowerCase())
         );
 
         submissionTake = await this.submissionTakeRepository.save(submissionTake);
