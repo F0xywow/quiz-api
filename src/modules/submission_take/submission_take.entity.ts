@@ -7,6 +7,7 @@ import { Question } from "../question/question.entity";
 @Entity()
 export class SubmissionTake{
     @PrimaryGeneratedColumn()
+    @Field()
     id: number;
 
     @Column()
@@ -32,4 +33,8 @@ export class SubmissionTake{
     @Column({nullable: true})
     @Field()
     isCorrect?: boolean;
+
+    @Column({type: 'int', array: true, nullable: true})
+    @Field(type => [Int], {nullable: true})
+    orderAnswers?: number[];
 }

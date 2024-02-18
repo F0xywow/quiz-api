@@ -8,4 +8,7 @@ export class CreateSubmissionTakeInput {
 
   @Field(type => [String], {nullable: true})
   textAnswers?: string[];
+
+  @Field(type => [Int], {nullable: true})
+  orderAnswers?: number[];
 }

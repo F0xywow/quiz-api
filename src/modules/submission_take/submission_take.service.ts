@@ -15,17 +15,26 @@ export class SubmissionTakeService {
         private questionService: QuestionService
     ){}
 
-    async createSubmissionTake(createSubmissionTakeInput: CreateSubmissionTakeInput, submissionId: number){
-        let submissionTake = this.submissionTakeRepository.create(createSubmissionTakeInput);
-
+    async createSubmissionTake(createSubmissionTakeInput: CreateSubmissionTakeInput, submissionId: number): Promise<SubmissionTake> {
+        const submissionTake = new SubmissionTake();
         const question = await this.questionService.findOneQuestion(createSubmissionTakeInput.questionId);
-        const correctAnswers = await this.answerService.findAllAnswersByQuestion(question.id);
+        const correctAnswers = await this.answerService.findCorrectAnswers(createSubmissionTakeInput.questionId);
 
-        submissionTake.isCorrect = createSubmissionTakeInput.textAnswers.every(answer =>
-            correctAnswers.some(correctAnswer => correctAnswer.text.toLowerCase() === answer.toLowerCase())
-        );
+        if (question.questionType === 'sorting') {
+            submissionTake.isCorrect = createSubmissionTakeInput.orderAnswers.every((answerOrder, index) =>
+                question.correctOrder[index] === answerOrder
+            );
+        } else {
+            submissionTake.isCorrect = createSubmissionTakeInput.textAnswers.length === correctAnswers.length &&
+                createSubmissionTakeInput.textAnswers.every(answer =>
+                    correctAnswers.some(correctAnswer => correctAnswer.text.toLowerCase() === answer.toLowerCase())
+                );
+        }
 
-        submissionTake = await this.submissionTakeRepository.save(submissionTake);
+        submissionTake.question = question;
+        submissionTake.textAnswers = createSubmissionTakeInput.textAnswers;
+        submissionTake.orderAnswers = createSubmissionTakeInput.orderAnswers;
+        submissionTake.submissionId = submissionId;
 
         return this.submissionTakeRepository.save(submissionTake);
     }

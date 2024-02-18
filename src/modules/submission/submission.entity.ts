@@ -7,6 +7,7 @@ import { Quiz } from "../quiz/quiz.entity";
 @Entity()
 export class Submission{
     @PrimaryGeneratedColumn()
+    @Field()
     id: number;
 
     @OneToMany(() => SubmissionTake, submissionTake => submissionTake.submission)

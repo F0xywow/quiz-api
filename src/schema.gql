@@ -3,6 +3,7 @@
 # ------------------------------------------------------
 
 type Answer {
+  id: Float!
   text: String!
   isCorrect: Boolean!
   questionId: Int!
@@ -10,6 +11,7 @@ type Answer {
 }
 
 type Submission {
+  id: Float!
   submissionTakes: [SubmissionTake!]!
   userId: Int!
   quizId: Int!
@@ -17,15 +19,18 @@ type Submission {
 }
 
 type SubmissionTake {
+  id: Float!
   submissionId: Int!
   submission: Submission!
   questionId: Int!
   question: Question!
   textAnswers: [String!]
   isCorrect: Boolean!
+  orderAnswers: [Int!]
 }
 
 type Question {
+  id: Float!
   text: String!
   questionType: String
   quizId: Int!
@@ -36,6 +41,7 @@ type Question {
 }
 
 type Quiz {
+  id: Float!
   name: String!
   questions: [Question!]!
 }
@@ -95,4 +101,5 @@ input CreateSubmissionInput {
 input CreateSubmissionTakeInput {
   questionId: Int!
   textAnswers: [String!]
+  orderAnswers: [Int!]
 }

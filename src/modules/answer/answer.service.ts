@@ -28,4 +28,7 @@ export class AnswerService {
         return this.answerRepository.find({where: {questionId: question_id}});
     }
 
+    findCorrectAnswers(question_id: number): Promise<Answer[]> {
+        return this.answerRepository.find({where: {questionId: question_id, isCorrect: true}});
+    }
 }

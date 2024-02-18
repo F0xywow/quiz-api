@@ -8,6 +8,7 @@ import { SubmissionTake } from "../submission_take/submission_take.entity";
 @Entity()
 export class Question{
     @PrimaryGeneratedColumn()
+    @Field()
     id: number;
 
     @Column({type: 'text'})
