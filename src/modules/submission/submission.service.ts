@@ -3,7 +3,6 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Submission } from "./submission.entity";
 import { Repository } from "typeorm";
 import { CreateSubmissionInput } from "./dto/create_submission.input";
-import { Answer } from "../answer/answer.entity";
 import { QuestionService } from "../question/question.service";
 
 @Injectable()
@@ -27,34 +26,70 @@ export class SubmissionService {
         return this.submissionRepository.findOne({where: {id: id}});
     }
 
-    async calculateResult(submissionId: number){
+    isAnswerCorrect(correctAnswers: string[], userAnswers: string[]): boolean {
+        const normalize = (str: string) => str.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").trim();
+
+        const normalizedCorrectAnswers = correctAnswers.map(normalize);
+        const normalizedUserAnswers = userAnswers.map(normalize);
+
+        for (const answer of normalizedUserAnswers) {
+            if (!normalizedCorrectAnswers.includes(answer)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    async calculateResult(submissionId: number): Promise<{ totalPoints: number; obtainedPoints: number }> {
         let totalPoints = 0;
         let obtainedPoints = 0;
 
         const submission = await this.findOneSubmission(submissionId);
 
-        for(let i = 0; i < submission.question_ids.length; i++){
-            const question = await this.questionService.findOneQuestion(submission.question_ids[i]);
-            const submittedAnswer = submission.userAnswers[i];
+        // Check if submission and submission.userAnswers are not null or undefined
+        if (submission && submission.userAnswers) {
+            for(let i = 0; i < submission.userAnswers.length; i++){
+                const question = await this.questionService.findOneQuestion(submission.question_ids[i]);
+                const submittedAnswers = submission.userAnswers[i];
 
-            totalPoints ++;
+                totalPoints ++;
 
-            if(question.questionType === 'multiple-choice'){
-                for (const correctAnswer of question.correctAnswers) {
-                    if(this.isAnswerCorrect(correctAnswer, submittedAnswer)){
-                        obtainedPoints++;
-                        break;
+                if(question && question.answers){
+                    const correctAnswers = question.answers.filter(answer => answer.isCorrect);
+                    switch(question.questionType) {
+                        case 'singleAnswer':
+                            if(correctAnswers.some(answer => answer.text === submittedAnswers)){
+                                obtainedPoints++;
+                            }
+                            break;
+                        case 'multipleAnswers':
+                            let isCorrect = true;
+                            for (const answer of submittedAnswers) {
+                                if (!correctAnswers.some(correctAnswer => correctAnswer.text === answer)) {
+                                    isCorrect = false;
+                                    break;
+                                }
+                            }
+                            if (isCorrect) {
+                                obtainedPoints++;
+                            }
+                            break;
+                        case 'sorting':
+                            if(JSON.stringify(correctAnswers.map(answer => answer.text)) === JSON.stringify(submittedAnswers)){
+                                obtainedPoints++;
+                            }
+                            break;
+                        case 'plainTextAnswer':
+                            if(correctAnswers.some(answer => answer.text.toLowerCase() === submittedAnswers.toLowerCase())){
+                                obtainedPoints++;
+                            }
+                            break;
                     }
                 }
             }
         }
-    
 
         return {totalPoints, obtainedPoints};
     }
-
-    isAnswerCorrect(correctAnswer: string, submittedAnswer: string){
-        const normalize = (str: string) => str.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").trim();
-        return normalize(correctAnswer) === normalize(submittedAnswer);
-    }
+    
 }

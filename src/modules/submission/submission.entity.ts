@@ -1,7 +1,6 @@
 import { Column, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Quiz } from "../quiz/quiz.entity";
 import { ObjectType, InputType, Field, Int } from "@nestjs/graphql";
-import { Question } from "../question/question.entity";
 
 
 @ObjectType()
@@ -29,10 +28,7 @@ export class Submission {
     @Column("int", { array: true} )
     question_ids!: number[];
 
-    @Field(type => [Int])
-    @Column("int", { array: true} )
-    answer_ids!: number[];
-
-    @Field(type => [String],{nullable: true})
-    userAnswers?: string[];
+    @Field(type => [String])
+    @Column("text", { array: true})
+    userAnswers!: string[];
 }

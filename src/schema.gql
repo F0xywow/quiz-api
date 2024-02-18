@@ -15,8 +15,6 @@ type Question {
   quizId: Int!
   quiz: Quiz!
   answers: [Answer!]!
-  correctAnswers: [String!]
-  plainTextAnswer: String
   correctOrder: [Int!]
 }
 
@@ -24,12 +22,10 @@ type Submission {
   student_id: Int!
   quiz_id: Int!
   question_ids: [Int!]!
-  answer_ids: [Int!]!
-  userAnswers: [String!]
+  userAnswers: [String!]!
 }
 
 type Quiz {
-  id: Int!
   name: String!
   questions: [Question!]!
   submissions: [Submission!]!
@@ -53,8 +49,6 @@ input QuestionInput {
   quizId: Int!
   quiz: QuizInput!
   answers: [AnswerInput!]!
-  correctAnswers: [String!]
-  plainTextAnswer: String
   correctOrder: [Int!]
 }
 
@@ -62,12 +56,10 @@ input SubmissionInput {
   student_id: Int!
   quiz_id: Int!
   question_ids: [Int!]!
-  answer_ids: [Int!]!
-  userAnswers: [String!]
+  userAnswers: [String!]!
 }
 
 input QuizInput {
-  id: Int!
   name: String!
   questions: [QuestionInput!]!
   submissions: [SubmissionInput!]!
@@ -114,6 +106,6 @@ input CreateAnswerInput {
 input CreateSubmissionInput {
   student_id: Int!
   quiz_id: Int!
-  question_number: [Int!]!
-  answer_number: [Int!]!
+  question_ids: [Int!]!
+  userAnswers: [String!]
 }

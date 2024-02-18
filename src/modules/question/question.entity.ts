@@ -2,8 +2,6 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColum
 import { Quiz } from "../quiz/quiz.entity";
 import { Answer } from "../answer/answer.entity";
 import { Field, ObjectType, Int, InputType } from "@nestjs/graphql";
-import { text } from "stream/consumers";
-import { stringify } from "querystring";
 
 @ObjectType()
 @Entity()
@@ -24,21 +22,13 @@ export class Question{
     @Field(type => Int)
     quizId?: number;
 
-    @ManyToOne(() => Quiz, quiz => quiz.questions, {nullable: true})
+    @ManyToOne(() => Quiz, quiz => quiz.questions, {onDelete: 'CASCADE'})
     @Field(() => Quiz)
-    quiz?: Quiz;
+    quiz!: Quiz;
 
-    @OneToMany(() => Answer, answer => answer.question, {nullable: true})
+    @OneToMany(() => Answer, answer => answer.question)
     @Field(() => [Answer])
-    answers?: Answer[];
-
-    @Column(() => text)
-    @Field(() => [String], {nullable: true})
-    correctAnswers?: string[];
-
-    @Column({type: 'text', nullable: true})
-    @Field({nullable: true})
-    plainTextAnswer?: string;
+    answers!: Answer[];
 
     @Column({type: 'simple-array', nullable: true})
     @Field(type => [Int], {nullable: true})

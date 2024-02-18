@@ -2,7 +2,6 @@ import { Resolver, Mutation, Args, Int, Query } from '@nestjs/graphql';
 import { Quiz } from "./quiz.entity";
 import { QuizService } from './quiz.service';
 import { CreateQuizInput } from './dto/create_quiz.input';
-import { Inject } from '@nestjs/common';
 
 @Resolver(() => Quiz)
 export class QuizResolver {

@@ -8,7 +8,6 @@ import { Submission } from '../submission/submission.entity';
 @InputType('QuizInput')
 export class Quiz {
   @PrimaryGeneratedColumn()
-  @Field(type => Int)
   id!: number;
 
   @Column()

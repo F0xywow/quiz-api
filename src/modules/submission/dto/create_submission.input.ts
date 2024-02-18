@@ -9,8 +9,8 @@ export class CreateSubmissionInput {
     quiz_id!: number;
 
     @Field(type => [Int])
-    question_number!: number[];
+    question_ids!: number[];
 
-    @Field(type => [Int])
-    answer_number!: number[];
+    @Field(type => [String],{nullable: true})
+    userAnswers?: string[];
 }

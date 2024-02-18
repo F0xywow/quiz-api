@@ -8,7 +8,7 @@ import { Field, InputType, Int, ObjectType } from "@nestjs/graphql";
 @InputType('AnswerInput')
 export class Answer {
     @PrimaryGeneratedColumn()
-    id?: number;
+    id!: number;
 
     @Column({type: 'text'})
     @Field()
