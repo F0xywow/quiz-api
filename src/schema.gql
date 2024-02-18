@@ -17,7 +17,7 @@ type Submission {
 }
 
 type SubmissionTake {
-  submissionId: Float!
+  submissionId: Int!
   submission: Submission!
   questionId: Int!
   question: Question!
@@ -40,15 +40,22 @@ type Quiz {
   questions: [Question!]!
 }
 
+type PointsResult {
+  maxPoints: Int!
+  obtainedPoints: Int!
+}
+
 type Query {
   findAllQuizzes: [Quiz!]!
   findOneQuiz(id: Int!): Quiz!
+  findQuestions(quiz_id: Int!): Quiz!
   findOneQuestion(id: Float!): Question!
   findAllQuestions: [Question!]!
   findOneAnswer(id: Float!): Answer!
   findAllAnswers: [Answer!]!
   findAllSubmissions: [Submission!]!
   findOneSubmission: Submission!
+  calculatePoints(submission_id: Int!): PointsResult!
   findAllSubmissionTakes: [SubmissionTake!]!
   findOneSubmissionTake(id: Float!): SubmissionTake!
 }

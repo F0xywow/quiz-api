@@ -4,8 +4,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
 import { join } from 'path';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { QuizModule } from './modules/quiz/quiz.module';
 import { QuestionModule } from './modules/question/question.module';
 import { AnswerModule } from './modules/answer/answer.module';
@@ -42,7 +40,5 @@ import { SubmissionModule } from './modules/submission/submission.module';
     SubmissionModule,
     SubmissionTakeModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

@@ -24,7 +24,19 @@ describe('QuizResolver', () => {
 
     it('should get questions', async () => {
         const quiz_id = 1;
-        const result = [{ question: 'What is the capital of France?', options: ['Paris', 'London', 'Berlin', 'Madrid'], answer: 'Paris' }];
+        const result = [{
+            id: 1,
+            text: 'What is the capital of France?',
+            questionType: 'multiple_choice',
+            quiz: { id: quiz_id, name: 'Geography Quiz' },
+            answers: [
+                { id: 1, text: 'Paris', isCorrect: true },
+                { id: 2, text: 'London', isCorrect: false },
+                { id: 3, text: 'Berlin', isCorrect: false },
+                { id: 4, text: 'Madrid', isCorrect: false }
+            ],
+            correctAnswer: { id: 1, text: 'Paris', isCorrect: true }
+        }];
 
         jest.spyOn(service, 'getQuestions').mockImplementation(() => Promise.resolve(result));
 

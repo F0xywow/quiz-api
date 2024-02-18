@@ -4,14 +4,12 @@ import { Repository } from "typeorm";
 import { Submission } from "./submission.entity";
 import { CreateSubmissionInput } from "./dto/create_submission.input";
 import { SubmissionTakeService } from "../submission_take/submission_take.service";
-import { QuestionService } from "../question/question.service";
 
 @Injectable()
 export class SubmissionService {
     constructor(@InjectRepository(Submission)
     private submissionRepository: Repository<Submission>,
     private submissionTakeService: SubmissionTakeService,
-    private questionService: QuestionService
     ){}
 
     async createSubmission(createSubmissionInput: CreateSubmissionInput){
