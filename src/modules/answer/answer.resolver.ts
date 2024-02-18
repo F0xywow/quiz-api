@@ -1,8 +1,6 @@
 import { Resolver, Args, ResolveField, Parent, Query, Mutation } from "@nestjs/graphql";
 import { Answer } from "./answer.entity";
-import { Inject } from "@nestjs/common";
 import { AnswerService } from "./answer.service";
-import { Question } from "../question/question.entity";
 import { CreateAnswerInput } from "./dto/create_answer.input";
 
 
@@ -21,11 +19,6 @@ export class AnswerResolver{
     findAllAnswers(): Promise<Answer[]>{
         return this.answerService.findAllAnswers();
     }
-
-   /* @ResolveField(returns => Question)
-    question(@Parent() answer: Answer): Promise<Question>{
-        return this.answerService.getQuestion(answer.questionId);
-    } */
 
     @Mutation(() => Answer)
     createAnswer(
