@@ -10,7 +10,12 @@ describe('QuizResolver', () => {
         const module: TestingModule = await Test.createTestingModule({
             providers: [
                 QuizResolver,
-                { provide: QuizService, useValue: { getQuestions: jest.fn() } },
+                { provide: QuizService, useValue: { 
+                    getQuestions: jest.fn(),
+                    findAllQuizzes: jest.fn(),
+                    findOneQuiz: jest.fn(),
+                    createQuiz: jest.fn(),
+                } },
             ],
         }).compile();
 
@@ -22,25 +27,46 @@ describe('QuizResolver', () => {
         expect(resolver).toBeDefined();
     });
 
-    it('should get questions', async () => {
+    it('should create a quiz', async () => {
+        const createQuizInput = { name: 'Sample Quiz', questions: [] };
+        const mockQuiz = { id: 1, name: 'Sample Quiz', questions: [] };
+        jest.spyOn(service, 'createQuiz').mockImplementation(() => Promise.resolve(mockQuiz));
+
+        expect(await resolver.createQuiz(createQuizInput)).toBe(mockQuiz);
+        expect(service.createQuiz).toHaveBeenCalledWith(createQuizInput);
+    });
+
+    it('should find all quizzes', async () => {
+        const mockQuizzes = [{ id: 1, name: 'Sample Quiz', questions: [] }];
+        jest.spyOn(service, 'findAllQuizzes').mockImplementation(() => Promise.resolve(mockQuizzes));
+
+        expect(await resolver.findAllQuizzes()).toBe(mockQuizzes);
+        expect(service.findAllQuizzes).toHaveBeenCalled();
+    });
+
+    it('should find one quiz', async () => {
+        const id = 1;
+        const mockQuiz = { id: 1, name: 'Sample Quiz', questions: [] };
+        jest.spyOn(service, 'findOneQuiz').mockImplementation(() => Promise.resolve(mockQuiz));
+
+        expect(await resolver.findOneQuiz(id)).toBe(mockQuiz);
+        expect(service.findOneQuiz).toHaveBeenCalledWith(id);
+    });
+
+    it('should find questions', async () => {
         const quiz_id = 1;
-        const result = [{
-            id: 1,
-            text: 'What is the capital of France?',
-            questionType: 'multiple_choice',
-            quiz: { id: quiz_id, name: 'Geography Quiz' },
-            answers: [
-                { id: 1, text: 'Paris', isCorrect: true },
-                { id: 2, text: 'London', isCorrect: false },
-                { id: 3, text: 'Berlin', isCorrect: false },
-                { id: 4, text: 'Madrid', isCorrect: false }
-            ],
-            correctAnswer: { id: 1, text: 'Paris', isCorrect: true }
-        }];
+        const mockQuestions = [
+            { 
+                id: 1, 
+                text: 'Sample Question', 
+                answers: [], 
+                questionType: 'Sample Question Type', 
+                quiz: { id: 1, name: 'Sample Quiz' } 
+            }
+        ];
+        jest.spyOn(service, 'getQuestions').mockImplementation(() => Promise.resolve(mockQuestions));
 
-        jest.spyOn(service, 'getQuestions').mockImplementation(() => Promise.resolve(result));
-
-        expect(await resolver.findQuestions(quiz_id)).toBe(result);
+        expect(await resolver.findQuestions(quiz_id)).toBe(mockQuestions);
         expect(service.getQuestions).toHaveBeenCalledWith(quiz_id);
     });
 });
