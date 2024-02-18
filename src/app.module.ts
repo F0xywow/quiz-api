@@ -9,6 +9,7 @@ import { AppService } from './app.service';
 import { QuizModule } from './modules/quiz/quiz.module';
 import { QuestionModule } from './modules/question/question.module';
 import { AnswerModule } from './modules/answer/answer.module';
+import { SubmissionTakeModule } from './modules/submission_take/submission_take.module';
 import { SubmissionModule } from './modules/submission/submission.module';
 
 @Module({
@@ -39,6 +40,7 @@ import { SubmissionModule } from './modules/submission/submission.module';
     QuestionModule,
     AnswerModule,
     SubmissionModule,
+    SubmissionTakeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

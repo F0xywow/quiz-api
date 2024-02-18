@@ -24,4 +24,8 @@ export class AnswerService {
         return this.answerRepository.findOne({where: {id: id}});
     }
 
+    findAllAnswersByQuestion(question_id: number): Promise<Answer[]> {
+        return this.answerRepository.find({where: {questionId: question_id}});
+    }
+
 }

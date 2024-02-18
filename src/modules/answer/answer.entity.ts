@@ -5,7 +5,6 @@ import { Field, InputType, Int, ObjectType } from "@nestjs/graphql";
 
 @ObjectType()
 @Entity()
-@InputType('AnswerInput')
 export class Answer {
     @PrimaryGeneratedColumn()
     id!: number;

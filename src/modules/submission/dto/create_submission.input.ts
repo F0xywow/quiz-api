@@ -1,16 +1,12 @@
 import { Field, InputType, Int } from "@nestjs/graphql";
+import { CreateSubmissionTakeInput } from "../../submission_take/dto/create_submission_take.input";
 
 @InputType()
 export class CreateSubmissionInput {
-    @Field(type => Int)
-    student_id!: number;
 
     @Field(type => Int)
-    quiz_id!: number;
+    questionId: number;
 
-    @Field(type => [Int])
-    question_ids!: number[];
-
-    @Field(type => [String],{nullable: true})
-    userAnswers?: string[];
+    @Field(type => [CreateSubmissionTakeInput], {nullable: true})
+    submissionTakes?: CreateSubmissionTakeInput[];
 }

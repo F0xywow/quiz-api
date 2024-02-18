@@ -1,42 +1,42 @@
-import { Resolver, Query, Int, ObjectType, Field } from "@nestjs/graphql";
-import { Args } from "@nestjs/graphql";
+import { Mutation, Resolver, Query, Args, ObjectType, Field, Int } from "@nestjs/graphql";
 import { Submission } from "./submission.entity";
 import { SubmissionService } from "./submission.service";
-import { Mutation } from "@nestjs/graphql";
 import { CreateSubmissionInput } from "./dto/create_submission.input";
 
 @ObjectType()
-class ResultType{
-    @Field(type => Int)
-    totalPoints: number;
+export class PointsResult {
+    @Field(() => Int)
+    maxPoints: number;
 
-    @Field(type => Int)
+    @Field(() => Int)
     obtainedPoints: number;
 }
 
 @Resolver(() => Submission)
 export class SubmissionResolver {
-    constructor(private submissionService: SubmissionService){}
-
-    @Query(() => Submission)
-    findOneSubmission(@Args('id') id: number): Promise<Submission> {
-        return this.submissionService.findOneSubmission(id);
-    }
+    constructor(private SubmissionService: SubmissionService){}
 
     @Query(() => [Submission])
-    findAllSubmissions(): Promise<Submission[]> {
-        return this.submissionService.findAllSubmissions();
+    findAllSubmissions(){
+        return this.SubmissionService.findAllSubmissions();
+    }
+
+    @Query(() => Submission)
+    findOneSubmission(id: number){
+        return this.SubmissionService.findOneSubmission(id);
     }
 
     @Mutation(() => Submission)
     createSubmission(
-        @Args('createSubmissionInput') createSubmissionInput: CreateSubmissionInput,
-        ): Promise<Submission> {
-        return this.submissionService.create(createSubmissionInput);
+        @Args('createSubmissionInput') createSubmissionInput: CreateSubmissionInput
+        ){
+        return this.SubmissionService.createSubmission(createSubmissionInput);
     }
 
-    @Query(() => ResultType)
-  async calculateResult(@Args('submissionId', { type: () => Int }) submissionId: number): Promise<ResultType> {
-    return this.submissionService.calculateResult(submissionId);
-  }
+    @Query(() => PointsResult)
+    async calculatePoints(
+        @Args('submission_id', { type: () => Int }) submission_id: number
+        ): Promise<PointsResult>{
+        return this.SubmissionService.calculatePoints(submission_id);
+    }
 }

@@ -9,6 +9,22 @@ type Answer {
   question: Question!
 }
 
+type Submission {
+  submissionTakes: [SubmissionTake!]!
+  userId: Int!
+  quizId: Int!
+  quiz: Quiz!
+}
+
+type SubmissionTake {
+  submissionId: Float!
+  submission: Submission!
+  questionId: Int!
+  question: Question!
+  textAnswers: [String!]
+  isCorrect: Boolean!
+}
+
 type Question {
   text: String!
   questionType: String
@@ -16,53 +32,12 @@ type Question {
   quiz: Quiz!
   answers: [Answer!]!
   correctOrder: [Int!]
-}
-
-type Submission {
-  student_id: Int!
-  quiz_id: Int!
-  question_ids: [Int!]!
-  userAnswers: [String!]!
+  submissionTakes: [SubmissionTake!]!
 }
 
 type Quiz {
   name: String!
   questions: [Question!]!
-  submissions: [Submission!]!
-}
-
-type ResultType {
-  totalPoints: Int!
-  obtainedPoints: Int!
-}
-
-input AnswerInput {
-  text: String!
-  isCorrect: Boolean!
-  questionId: Int!
-  question: QuestionInput!
-}
-
-input QuestionInput {
-  text: String!
-  questionType: String
-  quizId: Int!
-  quiz: QuizInput!
-  answers: [AnswerInput!]!
-  correctOrder: [Int!]
-}
-
-input SubmissionInput {
-  student_id: Int!
-  quiz_id: Int!
-  question_ids: [Int!]!
-  userAnswers: [String!]!
-}
-
-input QuizInput {
-  name: String!
-  questions: [QuestionInput!]!
-  submissions: [SubmissionInput!]!
 }
 
 type Query {
@@ -72,9 +47,10 @@ type Query {
   findAllQuestions: [Question!]!
   findOneAnswer(id: Float!): Answer!
   findAllAnswers: [Answer!]!
-  findOneSubmission(id: Float!): Submission!
   findAllSubmissions: [Submission!]!
-  calculateResult(submissionId: Int!): ResultType!
+  findOneSubmission: Submission!
+  findAllSubmissionTakes: [SubmissionTake!]!
+  findOneSubmissionTake(id: Float!): SubmissionTake!
 }
 
 type Mutation {
@@ -82,6 +58,7 @@ type Mutation {
   createQuestion(createQuestionInput: CreateQuestionInput!, quizId: Int!): Question!
   createAnswer(CreateAnswerInput: CreateAnswerInput!): Answer!
   createSubmission(createSubmissionInput: CreateSubmissionInput!): Submission!
+  createSubmissionTake(createSubmissionTakeInput: CreateSubmissionTakeInput!, submissionId: Int!): SubmissionTake!
 }
 
 input CreateQuizInput {
@@ -104,8 +81,11 @@ input CreateAnswerInput {
 }
 
 input CreateSubmissionInput {
-  student_id: Int!
-  quiz_id: Int!
-  question_ids: [Int!]!
-  userAnswers: [String!]
+  questionId: Int!
+  submissionTakes: [CreateSubmissionTakeInput!]
+}
+
+input CreateSubmissionTakeInput {
+  questionId: Int!
+  textAnswers: [String!]
 }

@@ -25,7 +25,7 @@ export class QuizService {
         return this.quizRepository.save(quiz);
     }
 
-    findAll(){
+    findAllQuizzes(){
         return this.quizRepository.find();
     }
 

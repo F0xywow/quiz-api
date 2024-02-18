@@ -1,34 +1,27 @@
-import { Column, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Field, ObjectType, Int } from "@nestjs/graphql";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
+import { SubmissionTake } from "../submission_take/submission_take.entity";
 import { Quiz } from "../quiz/quiz.entity";
-import { ObjectType, InputType, Field, Int } from "@nestjs/graphql";
-
 
 @ObjectType()
 @Entity()
-@InputType('SubmissionInput')
-export class Submission {
+export class Submission{
     @PrimaryGeneratedColumn()
-    id!: number;
-    
-    @Field(type => Int)
+    id: number;
+
+    @OneToMany(() => SubmissionTake, submissionTake => submissionTake.submission)
+    @Field(() => [SubmissionTake])
+    submissionTakes?: SubmissionTake[];
+
     @Column()
-    student_id!: number;
-
-    @Column({type:'timestamp', default: () => 'CURRENT_TIMESTAMP'})
-    submitted_at!: Date;
-
     @Field(type => Int)
+    userId: number;
+
     @Column()
-    quiz_id!: number;
+    @Field(type => Int)
+    quizId: number;
 
-    @ManyToOne(type => Quiz, quiz => quiz.submissions)
-    quiz!: Quiz;  
-
-    @Field(type => [Int])
-    @Column("int", { array: true} )
-    question_ids!: number[];
-
-    @Field(type => [String])
-    @Column("text", { array: true})
-    userAnswers!: string[];
+    @ManyToOne(() => Quiz, quiz => quiz.submissions)
+    @Field(() => Quiz)
+    quiz: Quiz;
 }

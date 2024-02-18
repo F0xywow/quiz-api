@@ -3,12 +3,11 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { Submission } from "./submission.entity";
 import { SubmissionService } from "./submission.service";
 import { SubmissionResolver } from "./submission.resolver";
-import { QuestionModule } from "../question/question.module";
+import { SubmissionTakeModule } from "../submission_take/submission_take.module";
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Submission]),QuestionModule],
+    imports: [TypeOrmModule.forFeature([Submission]), SubmissionTakeModule],
     providers: [SubmissionService, SubmissionResolver],
     exports: []
 })
-
 export class SubmissionModule {}

@@ -14,12 +14,17 @@ export class QuizResolver {
 
     @Query(() => [Quiz])
     findAllQuizzes(): Promise<Quiz[]> {
-        return this.quizService.findAll();
+        return this.quizService.findAllQuizzes();
     }
 
     @Query(() => Quiz)
-    findOneQuiz(@Args('id', {type: () => Int}) id: number): Promise<Quiz> {
+    findOneQuiz(@Args('id', {type: () => Int}) id: number){
         return this.quizService.findOneQuiz(id);
+    }
+
+    @Query(() => Quiz)
+    findQuestions(@Args('quiz_id', {type: () => Int}) quiz_id: number){
+        return this.quizService.getQuestions(quiz_id);
     }
 
 }

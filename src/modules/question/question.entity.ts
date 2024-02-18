@@ -2,10 +2,10 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColum
 import { Quiz } from "../quiz/quiz.entity";
 import { Answer } from "../answer/answer.entity";
 import { Field, ObjectType, Int, InputType } from "@nestjs/graphql";
+import { SubmissionTake } from "../submission_take/submission_take.entity";
 
 @ObjectType()
 @Entity()
-@InputType('QuestionInput')
 export class Question{
     @PrimaryGeneratedColumn()
     id: number;
@@ -33,4 +33,8 @@ export class Question{
     @Column({type: 'simple-array', nullable: true})
     @Field(type => [Int], {nullable: true})
     correctOrder?: number[];
+
+    @OneToMany(() => SubmissionTake, submissionTake => submissionTake.question)
+    @Field(() => [SubmissionTake])
+    submissionTakes?: SubmissionTake[];
 }
