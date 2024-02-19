@@ -5,7 +5,10 @@ import { CreateSubmissionTakeInput } from "../../submission_take/dto/create_subm
 export class CreateSubmissionInput {
 
     @Field(type => Int)
-    questionId: number;
+    quizId: number;
+
+    @Field(type => Int)
+    userId: number;
 
     @Field(type => [CreateSubmissionTakeInput], {nullable: true})
     submissionTakes?: CreateSubmissionTakeInput[];

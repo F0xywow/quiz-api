@@ -26,6 +26,13 @@ export class SubmissionResolver {
         return this.SubmissionService.findOneSubmission(id);
     }
 
+    @Query(() => [Submission])
+    getSubmissionTakes(
+        @Args('submission_id', { type: () => Int }) submission_id: number
+        ){
+        return this.SubmissionService.getSubmissionTakes(submission_id);
+    }
+
     @Mutation(() => Submission)
     createSubmission(
         @Args('createSubmissionInput') createSubmissionInput: CreateSubmissionInput

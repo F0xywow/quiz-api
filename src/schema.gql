@@ -61,6 +61,7 @@ type Query {
   findAllAnswers: [Answer!]!
   findAllSubmissions: [Submission!]!
   findOneSubmission: Submission!
+  getSubmissionTakes(submission_id: Int!): [Submission!]!
   calculatePoints(submission_id: Int!): PointsResult!
   findAllSubmissionTakes: [SubmissionTake!]!
   findOneSubmissionTake(id: Float!): SubmissionTake!
@@ -94,7 +95,8 @@ input CreateAnswerInput {
 }
 
 input CreateSubmissionInput {
-  questionId: Int!
+  quizId: Int!
+  userId: Int!
   submissionTakes: [CreateSubmissionTakeInput!]
 }
 

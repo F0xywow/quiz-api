@@ -18,8 +18,9 @@ export class Answer {
     @Field()
     isCorrect!: boolean;
 
+    @Column()
     @Field(type => Int)
-    questionId?: number
+    questionId!: number
 
     @ManyToOne(() => Question, question => question.answers)
     @Field(type => Question)

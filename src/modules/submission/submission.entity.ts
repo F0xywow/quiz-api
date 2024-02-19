@@ -12,7 +12,7 @@ export class Submission{
 
     @OneToMany(() => SubmissionTake, submissionTake => submissionTake.submission)
     @Field(() => [SubmissionTake])
-    submissionTakes?: SubmissionTake[];
+    submissionTakes: SubmissionTake[];
 
     @Column()
     @Field(type => Int)
