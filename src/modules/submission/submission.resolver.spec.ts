@@ -46,7 +46,8 @@ describe('SubmissionResolver', () => {
   it('should create a submission', async () => {
     const result = new Submission();
     const createSubmissionInput: CreateSubmissionInput = {
-      questionId: 1,
+      userId: 1,
+      quizId: 1,
       submissionTakes: [
         {
           questionId: 1,

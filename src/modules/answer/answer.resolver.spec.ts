@@ -32,7 +32,7 @@ describe('AnswerResolver', () => {
 
     describe('findOneAnswer', () => {
         it('should return one answer', async () => {
-            const result = { id: 1, text: 'Mock answer 1', isCorrect: true };
+            const result = { id: 1,questionId:1, text: 'Mock answer 1', isCorrect: true };
             jest.spyOn(service, 'findOneAnswer').mockImplementation(() => Promise.resolve(result));
 
             expect(await resolver.findOneAnswer(1)).toBe(result);
@@ -42,8 +42,8 @@ describe('AnswerResolver', () => {
     describe('findAllAnswers', () => {
         it('should return an array of answers', async () => {
             const result = [
-                { id: 1, text: 'Mock answer 1', isCorrect: true },
-                { id: 2, text: 'Mock answer 2', isCorrect: false }
+                { id: 1,questionId:1, text: 'Mock answer 1', isCorrect: true },
+                { id: 2,questionId:1, text: 'Mock answer 2', isCorrect: false }
             ];
             jest.spyOn(service, 'findAllAnswers').mockImplementation(() => Promise.resolve(result));
 
@@ -54,7 +54,7 @@ describe('AnswerResolver', () => {
     describe('createAnswer', () => {
         it('should create a new answer', async () => {
             const input = { text: 'New mock answer', isCorrect: true };
-            const result = { id: 3, text: 'New mock answer', isCorrect: true };
+            const result = { id: 3,questionId:1, text: 'New mock answer', isCorrect: true };
             jest.spyOn(service, 'create').mockImplementation(() => Promise.resolve(result));
 
             expect(await resolver.createAnswer(input)).toBe(result);
