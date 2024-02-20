@@ -1,12 +1,6 @@
-## Running the Application
+## Dockerizig database
 
-1. Install the dependencies:
-
-```bash
-$ npm install
-```
-
-2. Build docker database
+Build docker database
 ```bash
 
 # Building database
@@ -16,7 +10,16 @@ docker build -t quiz-app-db .
 docker run -p 5432:5432 quiz-app-db
 ```
 
-3. Start the application:
+
+## Running the Application
+
+1. Install the dependencies:
+
+```bash
+$ npm install
+```
+
+2. Start the application:
 ```bash
 # For development
 $ npm run start:dev
@@ -58,6 +61,12 @@ query {
   findAllQuizzes {
     id
     name
+    questions{
+      text
+      answers{
+        text
+      }
+    }
   }
 }
 ```
@@ -117,38 +126,78 @@ query {
 }
 ```
 
+7. Fetch questions for one quiz
+
+```gql
+query {
+  findOneQuiz(id: x) {
+   id
+    name
+    questions{
+      text
+      answers{
+        text
+      }
+    }
+  }
+}
+```
+
 ### Mutations
 
 1. Create a new quiz:
 
 ```gql
 mutation {
-  createQuiz(createQuizInput: { name: "New Quiz", questions: [] }) {
-    id
+  createQuiz(createQuizInput: {
+    name: "Sample Quiz",
+    questions: [
+      {
+        text: "Sample Question",
+        questionType: "singleAnswer",
+        answers: [
+          {
+            text: "Correct Answer",
+            isCorrect: true
+          },
+          {
+            text: "Incorrect Answer",
+            isCorrect: false
+          }
+        ]
+      }
+    ]
+  }) {
     name
+    questions {
+      text
+      answers {
+        text
+        isCorrect
+      }
+    }
   }
 }
 ```
 
-2. Create a new question:
+2. Create a new submission:
 
 ```gql
-mutation {
-  createQuestion(createQuestionInput: { text: "New Question", questionType: "MCQ", answers: [] }, quizId: 1) {
-    id
-    text
-  }
+mutation{
+ createSubmission(createSubmissionInput:{
+  quizId:1,
+  userId:1,
+  submissionTakes:[
+    {
+      questionId:1,
+      textAnswers:["Witam"],
+    }
+  ]
+}){
+	id,
+  quizId,
+ 
 }
-```
-
-3. Create a new submission take:
-
-```gql
-mutation {
-  createSubmissionTake(createSubmissionTakeInput: { questionId: 1, textAnswers: ["Answer 1", "Answer 2"] }, submissionId: 1) {
-    id
-    textAnswers
-  }
 }
 ```
 

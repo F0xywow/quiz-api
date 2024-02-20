@@ -22,9 +22,10 @@ export class AnswerResolver{
 
     @Mutation(() => Answer)
     createAnswer(
-        @Args('CreateAnswerInput') createAnswerInput: CreateAnswerInput
+        @Args('CreateAnswerInput') createAnswerInput: CreateAnswerInput,
+        @Args('questionId') questionId: number
         ): Promise<Answer>{
-            return this.answerService.create(createAnswerInput);
+            return this.answerService.create(createAnswerInput, questionId);
         }
 
 }

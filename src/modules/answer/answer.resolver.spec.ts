@@ -54,10 +54,11 @@ describe('AnswerResolver', () => {
     describe('createAnswer', () => {
         it('should create a new answer', async () => {
             const input = { text: 'New mock answer', isCorrect: true };
-            const result = { id: 3,questionId:1, text: 'New mock answer', isCorrect: true };
+            const questionId = 1;
+            const result = { id: 3, questionId: questionId, text: 'New mock answer', isCorrect: true };
             jest.spyOn(service, 'create').mockImplementation(() => Promise.resolve(result));
 
-            expect(await resolver.createAnswer(input)).toBe(result);
+            expect(await resolver.createAnswer(input, questionId)).toBe(result);
         });
     });
 });

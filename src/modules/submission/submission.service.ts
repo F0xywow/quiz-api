@@ -15,22 +15,22 @@ export class SubmissionService {
     async createSubmission(createSubmissionInput: CreateSubmissionInput){
         let submission = this.submissionRepository.create(createSubmissionInput);
 
-        submission = await this.submissionRepository.save(submission);
+        const savedSubmission = await this.submissionRepository.save(submission);
 
         for(const submissionTakeInput of createSubmissionInput.submissionTakes){
             const submissionTake = await this.submissionTakeService.createSubmissionTake(submissionTakeInput,submission.id);
-            submission.submissionTakes.push(submissionTake);
+            savedSubmission.submissionTakes.push(submissionTake);
         }
         
         return this.submissionRepository.save(submission);
     }
 
     findAllSubmissions(){
-        return this.submissionRepository.find();
+        return this.submissionRepository.find({relations: ['submissionTakes']});
     }
 
     findOneSubmission(id: number){
-        return this.submissionRepository.findOne({where: {id: id}});
+        return this.submissionRepository.findOne({where: {id: id},relations: ['submissionTakes']});
     }
 
     getSubmissionTakes(submission_id: number){

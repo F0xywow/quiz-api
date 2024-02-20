@@ -20,21 +20,23 @@ export class QuestionService {
           }
         const question = this.questionRepository.create(createQuestionInput);
         question.quizId = quizId;
+
+        const savedQuestion = await this.questionRepository.save(question);
         
         for (const answerInput of createQuestionInput.answers) {
-            const answer = await this.answerService.create(answerInput);
-            question.answers.push(answer);
+            const answer = await this.answerService.create(answerInput, question.id);
+            savedQuestion.answers.push(answer);
         }
         
-        return this.questionRepository.save(question);
+        return this.questionRepository.save(savedQuestion);
     }
 
     findAllQuestions(): Promise<Question[]> {
-        return this.questionRepository.find();
+        return this.questionRepository.find({relations: ['answers']});
     }
 
     findOneQuestion(id: number): Promise<Question> {
-        return this.questionRepository.findOne({where: {id: id}});
+        return this.questionRepository.findOne({where: {id: id},relations: ['answers']});
     }
 
     findAllQuestionsByQuiz(quiz_id: number): Promise<Question[]> {

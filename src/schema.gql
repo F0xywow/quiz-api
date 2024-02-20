@@ -11,7 +11,7 @@ type Answer {
 }
 
 type Submission {
-  id: Float!
+  id: Int!
   submissionTakes: [SubmissionTake!]!
   userId: Int!
   quizId: Int!
@@ -57,11 +57,11 @@ type Query {
   findQuestions(quiz_id: Int!): Quiz!
   findOneQuestion(id: Float!): Question!
   findAllQuestions: [Question!]!
+  findAllQuestionsByQuiz(quizId: Int!): [Question!]!
   findOneAnswer(id: Float!): Answer!
   findAllAnswers: [Answer!]!
   findAllSubmissions: [Submission!]!
   findOneSubmission: Submission!
-  getSubmissionTakes(submission_id: Int!): [Submission!]!
   calculatePoints(submission_id: Int!): PointsResult!
   findAllSubmissionTakes: [SubmissionTake!]!
   findOneSubmissionTake(id: Float!): SubmissionTake!
@@ -70,7 +70,7 @@ type Query {
 type Mutation {
   createQuiz(createQuizInput: CreateQuizInput!): Quiz!
   createQuestion(createQuestionInput: CreateQuestionInput!, quizId: Int!): Question!
-  createAnswer(CreateAnswerInput: CreateAnswerInput!): Answer!
+  createAnswer(CreateAnswerInput: CreateAnswerInput!, questionId: Float!): Answer!
   createSubmission(createSubmissionInput: CreateSubmissionInput!): Submission!
   createSubmissionTake(createSubmissionTakeInput: CreateSubmissionTakeInput!, submissionId: Int!): SubmissionTake!
 }
@@ -84,8 +84,6 @@ input CreateQuestionInput {
   text: String!
   questionType: String
   answers: [CreateAnswerInput!]
-  correctAnswers: [String!]
-  plainTextAnswer: String
   correctOrder: [Int!]
 }
 

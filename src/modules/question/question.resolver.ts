@@ -17,6 +17,13 @@ export class QuestionResolver {
         return this.questionService.findAllQuestions();
     }
 
+    @Query(() => [Question])
+    findAllQuestionsByQuiz(
+        @Args('quizId', { type: () => Int }) quizId: number
+        ): Promise<Question[]> {
+        return this.questionService.findAllQuestionsByQuiz(quizId);
+    }
+
     @Mutation(() => Question)
     createQuestion(
         @Args('createQuestionInput') createQuestionInput: CreateQuestionInput,

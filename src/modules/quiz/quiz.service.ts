@@ -26,11 +26,11 @@ export class QuizService {
     }
 
     findAllQuizzes(){
-        return this.quizRepository.find();
+        return this.quizRepository.find({relations: ['questions', 'questions.answers']});
     }
 
     findOneQuiz(id: number){
-        return this.quizRepository.findOne({where: {id: id}});
+        return this.quizRepository.findOne({where: {id: id},relations: ['questions', 'questions.answers']});
     }
 
     getQuestions(quiz_id: number){

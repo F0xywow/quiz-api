@@ -10,8 +10,9 @@ export class AnswerService {
     private answerRepository: Repository<Answer>, 
     ){}
 
-    create(createAnswerInput: CreateAnswerInput): Promise<Answer> {
+    create(createAnswerInput: CreateAnswerInput, questionId: number): Promise<Answer> {
         const answer = this.answerRepository.create(createAnswerInput);
+        answer.questionId = questionId;
 
         return this.answerRepository.save(answer);
     }
