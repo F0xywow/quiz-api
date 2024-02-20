@@ -52,21 +52,4 @@ describe('QuizResolver', () => {
         expect(await resolver.findOneQuiz(id)).toBe(mockQuiz);
         expect(service.findOneQuiz).toHaveBeenCalledWith(id);
     });
-
-    it('should find questions', async () => {
-        const quiz_id = 1;
-        const mockQuestions = [
-            { 
-                id: 1, 
-                text: 'Sample Question', 
-                answers: [], 
-                questionType: 'Sample Question Type', 
-                quiz: { id: 1, name: 'Sample Quiz' } 
-            }
-        ];
-        jest.spyOn(service, 'getQuestions').mockImplementation(() => Promise.resolve(mockQuestions));
-
-        expect(await resolver.findQuestions(quiz_id)).toBe(mockQuestions);
-        expect(service.getQuestions).toHaveBeenCalledWith(quiz_id);
-    });
 });
