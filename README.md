@@ -130,7 +130,7 @@ query {
 
 ```gql
 query {
-  findOneQuiz(id: x) {
+  findOneQuiz(id: 1) {
    id
     name
     questions{
@@ -139,6 +139,18 @@ query {
         text
       }
     }
+  }
+}
+```
+
+8. Calculating points for submission
+
+```gql
+query{
+  calculatePoints(submission_id:1)
+  {
+    obtainedPoints
+    maxPoints
   }
 }
 ```
@@ -200,4 +212,3 @@ mutation{
 }
 }
 ```
-
