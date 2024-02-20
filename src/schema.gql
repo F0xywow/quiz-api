@@ -54,10 +54,8 @@ type PointsResult {
 type Query {
   findAllQuizzes: [Quiz!]!
   findOneQuiz(id: Int!): Quiz!
-  findQuestions(quiz_id: Int!): Quiz!
   findOneQuestion(id: Float!): Question!
   findAllQuestions: [Question!]!
-  findAllQuestionsByQuiz(quizId: Int!): [Question!]!
   findOneAnswer(id: Float!): Answer!
   findAllAnswers: [Answer!]!
   findAllSubmissions: [Submission!]!

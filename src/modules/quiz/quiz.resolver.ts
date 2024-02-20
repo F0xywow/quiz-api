@@ -21,10 +21,4 @@ export class QuizResolver {
     findOneQuiz(@Args('id', {type: () => Int}) id: number){
         return this.quizService.findOneQuiz(id);
     }
-
-    @Query(() => Quiz)
-    findQuestions(@Args('quiz_id', {type: () => Int}) quiz_id: number){
-        return this.quizService.getQuestions(quiz_id);
-    }
-
 }
