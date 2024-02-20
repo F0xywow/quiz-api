@@ -28,11 +28,16 @@ export class SubmissionTakeService {
             submissionTake.isCorrect = createSubmissionTakeInput.orderAnswers.every((answerOrder, index) =>
                 question.correctOrder[index] === answerOrder
             );
-        } else {
+        } else if (question.questionType === 'singleAnswer' || question.questionType === 'plainTextAnswer') {
+            submissionTake.isCorrect = createSubmissionTakeInput.textAnswers.length === 1 &&
+                correctAnswers.some(correctAnswer => correctAnswer.text.toLowerCase() === createSubmissionTakeInput.textAnswers[0].toLowerCase());
+        } else if (question.questionType === 'multipleAnswers') {
             submissionTake.isCorrect = createSubmissionTakeInput.textAnswers.length === correctAnswers.length &&
                 createSubmissionTakeInput.textAnswers.every(answer =>
                     correctAnswers.some(correctAnswer => correctAnswer.text.toLowerCase() === answer.toLowerCase())
                 );
+        } else {
+            submissionTake.isCorrect = false;
         }
 
         // Set the properties of the new SubmissionTake
