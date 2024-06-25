@@ -27,6 +27,10 @@ $ npm run start:dev
 # For production
 $ npm run start:prod
 ```
+3. Access
+```
+Site is accessable through localhost:3000/graphql
+```
 ## Entities
 
 The application is built around four main entities: `Quiz`, `Question`, `Answer`, and `Submission`. 
